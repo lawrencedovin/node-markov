@@ -1,0 +1,22 @@
+{
+  "name": "markov",
+  "version": "1.0.0",
+  "main": "makeText.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lawrencedovin/node-markov.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lawrencedovin/node-markov/issues"
+  },
+  "homepage": "https://github.com/lawrencedovin/node-markov#readme",
+  "description": "",
+  "dependencies": {
+    "fs": "0.0.1-security"
+  }
+}

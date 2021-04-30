@@ -18,6 +18,17 @@ class MarkovMachine {
 
   makeChains() {
     // TODO
+    let chains = {};
+    console.log(`${this.words}`);
+    for (let i = 0; i < this.words.length; i++) {
+      if (typeof chains[this.words[i]] !== 'undefined' && chains[this.words[i]].length > 0) {
+        chains[this.words[i]].push(this.words[i+1]);
+      } 
+      else {
+        chains[this.words[i]] = [`${this.words[i+1]}`];
+      }
+    }
+    console.log(chains);
   }
 
 
@@ -27,3 +38,6 @@ class MarkovMachine {
     // TODO
   }
 }
+
+let mm = new MarkovMachine("the cat in the hat");
+// console.log(mm);
