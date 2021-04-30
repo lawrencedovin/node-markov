@@ -17,27 +17,58 @@ class MarkovMachine {
    *  {"the": ["cat", "hat"], "cat": ["in"], "in": ["the"], "hat": [null]} */
 
   makeChains() {
-    // TODO
-    let chains = {};
-    console.log(`${this.words}`);
-    for (let i = 0; i < this.words.length; i++) {
-      if (typeof chains[this.words[i]] !== 'undefined' && chains[this.words[i]].length > 0) {
-        chains[this.words[i]].push(this.words[i+1]);
-      } 
-      else {
-        chains[this.words[i]] = [`${this.words[i+1]}`];
-      }
+    // let chains = {};
+
+    // for (let i = 0; i < this.words.length; i++) {
+    //   if (typeof chains[this.words[i]] !== 'undefined' && chains[this.words[i]].length > 0) {
+    //     chains[this.words[i]].push(this.words[i+1]);
+    //   } 
+    //   else {
+    //     chains[this.words[i]] = [`${this.words[i+1]}`];
+    //   }
+    // }
+    // this.chains = chains;
+
+    let chains = new Map();
+
+    for (let i = 0; i < this.words.length; i += 1) {
+      let word = this.words[i];
+      let nextWord = this.words[i + 1] || null;
+
+      if (chains.has(word)) chains.get(word).push(nextWord);
+      else chains.set(word, [nextWord]);
     }
-    console.log(chains);
+
+    this.chains = chains;
+  }
+
+
+  /** Pick random choice from array */
+
+  static choice(ar) {
+    return ar[Math.floor(Math.random() * ar.length)];
   }
 
 
   /** return random text from chains */
 
   makeText(numWords = 100) {
-    // TODO
+    // pick a random key to begin
+    let keys = Array.from(this.chains.keys());
+    let key = MarkovMachine.choice(keys);
+    let out = [];
+
+    // produce markov chain until reaching termination word
+    while (out.length < numWords && key !== null) {
+      out.push(key);
+      key = MarkovMachine.choice(this.chains.get(key));
+    }
+
+    return out.join(" ");
   }
 }
 
-let mm = new MarkovMachine("the cat in the hat");
-// console.log(mm);
+
+module.exports = {
+  MarkovMachine,
+};
