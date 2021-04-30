@@ -8,7 +8,7 @@ class MarkovMachine {
   constructor(text) {
     let words = text.split(/[ \r\n]+/);
     this.words = words.filter(c => c !== "");
-    this.makeChains();
+    this.chains = this.makeChains();
   }
 
   /** set markov chains:
@@ -35,11 +35,11 @@ class MarkovMachine {
       let word = this.words[i];
       let nextWord = this.words[i + 1] || null;
 
-      if (chains.has(word)) chains.get(word).push(nextWord);
-      else chains.set(word, [nextWord]);
+      // if key is found then push the word to the key's value
+      chains.has(word) ? chains.get(word).push(nextWord): chains.set(word, [nextWord]);
     }
 
-    this.chains = chains;
+    return chains;
   }
 
 
@@ -54,6 +54,7 @@ class MarkovMachine {
 
   makeText(numWords = 100) {
     // pick a random key to begin
+    // Places the keys from chains into an array 
     let keys = Array.from(this.chains.keys());
     let key = MarkovMachine.choice(keys);
     let out = [];
